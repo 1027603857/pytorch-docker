@@ -1,5 +1,7 @@
-ARG BASE_IMAGE=ubuntu:20.04
+ARG BASE_IMAGE=nvidia/cuda:11.3.1-cudnn8-devel-ubuntu20.04
 ARG PYTHON_VERSION=3.10
+ARG CUDA_VERSION=11.3
+ARG PYTORCH_VERSION=1.12.1
 
 FROM ${BASE_IMAGE} as dev-base
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -17,7 +19,6 @@ RUN mkdir /opt/ccache && ccache --set-config=cache_dir=/opt/ccache
 ENV PATH /opt/conda/bin:$PATH
 
 FROM dev-base as conda
-ARG PYTHON_VERSION=3.10
 # Automatically set by buildx
 ARG TARGETPLATFORM
 # translating Docker's TARGETPLATFORM into miniconda arches
@@ -31,8 +32,6 @@ RUN chmod +x ~/miniconda.sh && \
     /opt/conda/bin/conda clean -ya
 
 FROM conda as conda-installs
-ARG PYTHON_VERSION=3.10
-ARG CUDA_VERSION=11.3
 ARG CUDA_CHANNEL=nvidia
 ARG INSTALL_CHANNEL=pytorch
 ENV CONDA_OVERRIDE_CUDA=${CUDA_VERSION}
@@ -42,14 +41,14 @@ ARG TARGETPLATFORM
 # On arm64 we can only install wheel packages
 RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3
 RUN /opt/conda/bin/conda clean -ya
-RUN /opt/conda/bin/pip install torchelastic
+RUN /opt/conda/bin/pip install torchelastic tensorflow==2.11.0
 
 FROM ${BASE_IMAGE} as official
-ARG PYTORCH_VERSION=1.12.1
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-		openssh-server \
+	openssh-server \
         ca-certificates \
+	libgl1-mesa-glx \
         libjpeg-dev \
         libpng-dev && \
     rm -rf /var/lib/apt/lists/*
