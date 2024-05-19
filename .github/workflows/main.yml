@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - ./build.sh
+      - build.sh
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}-${{ github.event_name == 'workflow_dispatch' }}
