@@ -22,7 +22,7 @@ FROM dev-base as conda
 # Automatically set by buildx
 ARG TARGETPLATFORM
 # translating Docker's TARGETPLATFORM into miniconda arches
-RUN curl -fsSL -v -o ~/miniconda.sh -O  "https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py310_24.3.0-0-Linux-x86_64.sh"
+RUN curl -fsSL -v -o ~/miniconda.sh -O  "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
 RUN chmod +x ~/miniconda.sh && \
     bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh && \
@@ -39,7 +39,7 @@ ENV CONDA_OVERRIDE_CUDA=${CUDA_VERSION}
 RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -y python=${PYTHON_VERSION}
 ARG TARGETPLATFORM
 # On arm64 we can only install wheel packages
-RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3
+RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y "python=${PYTHON_VERSION}" pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3
 RUN /opt/conda/bin/conda clean -ya
 RUN /opt/conda/bin/pip install torchelastic tensorflow==2.11.0
 
