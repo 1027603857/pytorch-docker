@@ -4,9 +4,6 @@ ARG CUDA_VERSION=11.3
 ARG PYTORCH_VERSION=1.12.1
 
 FROM ${BASE_IMAGE} as dev-base
-RUN echo 'export $(cat /proc/1/environ |tr "\\0" "\\n" | xargs)' >> /etc/profile && \
-    cat /etc/profile
-
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         build-essential \
         ca-certificates \
