@@ -49,9 +49,10 @@ FROM conda-installs as official
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 
 # Config ssh
-RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config && \
-    echo "service ssh start" >> /root/.bashrc && \
-    echo "export \$(cat /proc/1/environ |tr '\\0' '\\n' | xargs)" >> /etc/profile
+RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
+    echo 'service ssh start' >> /root/.bashrc && \
+    echo 'export $(cat /proc/1/environ |tr "\0" "\n" | xargs)' >> /etc/profile && \
+    cat /etc/profile
 
 # Optimize access speed in Chinese mainland
 RUN /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/ && \
