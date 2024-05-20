@@ -51,7 +51,7 @@ LABEL com.nvidia.volumes.needed="nvidia_driver"
 # Config ssh
 RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
     echo 'service ssh start' >> /root/.bashrc && \
-    echo 'export $(cat /proc/1/environ |tr "\0" "\n" | xargs)' >> /etc/profile && \
+    echo 'export $(cat /proc/1/environ |tr "\\\\0" "\\\\n" | xargs)' >> /etc/profile && \
     cat /etc/profile
 
 # Optimize access speed in Chinese mainland
