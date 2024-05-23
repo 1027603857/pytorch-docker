@@ -43,7 +43,10 @@ ARG TARGETPLATFORM
 RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y "python=${PYTHON_VERSION}" \
     pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 && \
     /opt/conda/bin/conda clean -ya && \
-    /opt/conda/bin/pip install torchelastic tensorflow==2.13.0 tensorrt==8.6
+    /opt/conda/bin/pip install torchelastic
+
+# Install if you need
+# /opt/conda/bin/pip install tensorflow==2.13.0 tensorrt==8.6
 
 FROM conda-installs as official
 LABEL com.nvidia.volumes.needed="nvidia_driver"
