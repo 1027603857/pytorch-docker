@@ -26,8 +26,8 @@ RUN curl -fsSL -v -o ~/miniconda.sh -O "https://repo.anaconda.com/miniconda/Mini
 RUN chmod +x ~/miniconda.sh && \
     bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh && \
-    /opt/conda/bin/conda install -y python=${PYTHON_VERSION} cmake conda-build pyyaml numpy=1.24.4 ipython && \
-    /opt/conda/bin/python -mpip install astunparse expecttest future numpy==1.24.4 psutil pyyaml requests \
+    /opt/conda/bin/conda install -y python=${PYTHON_VERSION} cmake conda-build pyyaml numpy ipython && \
+    /opt/conda/bin/python -mpip install astunparse expecttest future numpy psutil pyyaml requests \
         setuptools six types-dataclasses typing_extensions sympy && \
     /opt/conda/bin/conda clean -ya && \
     ccache -C
@@ -43,14 +43,14 @@ ARG TARGETPLATFORM
 RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y "python=${PYTHON_VERSION}" \
     pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit=11.3 && \
     /opt/conda/bin/conda clean -ya && \
-    /opt/conda/bin/pip install torchelastic tensorflow==2.11.0
+    /opt/conda/bin/pip install torchelastic tensorflow==2.13.0 tensorrt==8.6
 
 FROM conda-installs as official
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 
 # Config ssh
 RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
-    echo 'cd /home/prod' >> /root/.bashrc && \
+    echo 'cd /workspace' >> /root/.bashrc && \
     echo 'service ssh start' >> /root/.bashrc && \
     echo 'export $(cat /proc/1/environ |tr "\\0" "\\n" | xargs)' >> /etc/profile
 
