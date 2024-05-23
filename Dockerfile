@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=nvidia/cuda:11.3.1-cudnn8-devel-ubuntu20.04
+ARG BASE_IMAGE=nvidia/cuda:11.3.1-cudnn8-devel-ubuntu18.04
 ARG PYTHON_VERSION=3.10
 ARG CUDA_VERSION=11.3
 ARG PYTORCH_VERSION=1.12.1
