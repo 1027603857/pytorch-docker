@@ -68,6 +68,6 @@ RUN /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-ENV LD_LIBRARY_PATH /opt/conda/lib/python3.10/site-packages/tensorrt
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/opt/conda/lib/python3.10/site-packages/tensorrt
 ENV PYTORCH_VERSION ${PYTORCH_VERSION}
 WORKDIR /workspace
