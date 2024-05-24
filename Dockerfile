@@ -45,9 +45,6 @@ RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y
     /opt/conda/bin/conda clean -ya && \
     /opt/conda/bin/pip install torchelastic
 
-# Install if you need
-# /opt/conda/bin/pip install tensorflow==2.13.0 tensorrt==8.6
-
 FROM conda-installs as official
 LABEL com.nvidia.volumes.needed="nvidia_driver"
 
@@ -68,6 +65,11 @@ RUN /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/opt/conda/lib/python3.10/site-packages/tensorrt
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64
+
+# Install tensorflow in conda env
+# pip install tensorflow==2.13.0 tensorrt==8.6
+# conda env config vars set LD_LIBRARY_PATH=$CONDA_PREFIX/lib/python3.10/site-packages/tensorrt:$LD_LIBRARY_PATH -n env_name
+
 ENV PYTORCH_VERSION ${PYTORCH_VERSION}
 WORKDIR /workspace
