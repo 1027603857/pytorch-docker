@@ -3,7 +3,7 @@
 
 启动命令
 ```
-docker run -it -d -p 1234:22 -v /home/workspack:/workspace --gpus all --name pytorch -e NVIDIA_VISIBLE_DEVICES=YOUR_GPU_LABELS 1027603857/pytorch bash
+docker run -it -d -p 1234:22 -v /home/workspack:/workspace --gpus all --shm-size=8G --name pytorch 1027603857/pytorch bash
 ```
 安装tensorflow
 ```
