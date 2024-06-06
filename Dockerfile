@@ -66,7 +66,7 @@ RUN /opt/conda/bin/conda config --add channels https://mirrors.tuna.tsinghua.edu
 
 ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/tensorrt
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib64:/usr/local/tensorrt/lib
 
 # Install tensorflow in conda env
 # pip install tensorflow==2.13.0 tensorrt==8.6
