@@ -8,5 +8,5 @@ docker run -it -d -p 1234:22 -v /home/workspack:/workspace --gpus all --shm-size
 安装tensorflow
 ```
 # tensorflow==2.13.0 tensorrt==8.6
-docker run -it -d -p 1234:22 -v /YOUR_WORKSPACE:/workspace -v /TENSORRT:/TENSORRT --gpus all --shm-size=8g --name pytorch 1027603857/pytorch bash
+docker run -it -d -p 1234:22 -v /YOUR_WORKSPACE:/workspace -v /TENSORRT:/usr/local/tensorrt --gpus all --shm-size=8g --name pytorch 1027603857/pytorch bash
 ```
