@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=nvidia/cuda:12.1.0-cudnn8-devel-ubuntu20.04
 ARG PYTHON_VERSION=3.8
 ARG CUDA_VERSION=12.1
-ARG PYTORCH_VERSION=2.3.1
+ARG PYTORCH_VERSION=2.3
 
 FROM ${BASE_IMAGE} as dev-base
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -41,7 +41,7 @@ RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -y python=${PYTHON_VERS
 ARG TARGETPLATFORM
 # On arm64 we can only install wheel packages
 RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y "python=${PYTHON_VERSION}" \
-    pytorch torchvision torchaudio pytorch-cuda=12.1 && \
+    pytorch==2.3.0 torchvision==0.18.0 torchaudio==2.3.0 pytorch-cuda=12.1 && \
     /opt/conda/bin/conda install -y jupyter notebook && \
     /opt/conda/bin/conda clean -ya && \
     /opt/conda/bin/pip install torchelastic
