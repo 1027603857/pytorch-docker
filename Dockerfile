@@ -22,7 +22,7 @@ FROM dev-base as conda
 # Automatically set by buildx
 ARG TARGETPLATFORM
 # translating Docker's TARGETPLATFORM into miniconda arches
-RUN curl -fsSL -v -o ~/miniconda.sh -O "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
+RUN curl -fsSL -v -o ~/miniconda.sh -O "https://repo.anaconda.com/miniconda/Miniconda3-py38_23.11.0-2-Linux-x86_64.sh"
 RUN chmod +x ~/miniconda.sh && \
     bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh
