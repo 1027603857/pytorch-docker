@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=nvidia/cuda:12.1.0-cudnn8-devel-ubuntu20.04
 ARG PYTHON_VERSION=3.8
 ARG CUDA_VERSION=12.1
-ARG PYTORCH_VERSION=2.3
+ARG PYTORCH_VERSION=2.3.0
 
 FROM ${BASE_IMAGE} as dev-base
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
