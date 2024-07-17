@@ -25,8 +25,9 @@ ARG TARGETPLATFORM
 RUN curl -fsSL -v -o ~/miniconda.sh -O "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh"
 RUN chmod +x ~/miniconda.sh && \
     bash ~/miniconda.sh -b -p /opt/conda && \
-    rm ~/miniconda.sh && \
-    /opt/conda/bin/conda install -y python=${PYTHON_VERSION} cmake conda-build pyyaml numpy ipython && \
+    rm ~/miniconda.sh
+RUN /opt/conda/bin/conda install -y python=${PYTHON_VERSION}
+RUN /opt/conda/bin/conda install -y cmake conda-build pyyaml numpy ipython && \
     /opt/conda/bin/python -mpip install astunparse expecttest future numpy psutil pyyaml requests \
         setuptools six types-dataclasses typing_extensions sympy && \
     /opt/conda/bin/conda clean -ya && \
@@ -36,8 +37,6 @@ FROM conda as conda-installs
 ARG CUDA_CHANNEL=nvidia
 ARG INSTALL_CHANNEL=pytorch
 ENV CONDA_OVERRIDE_CUDA=${CUDA_VERSION}
-# Automatically set by buildx
-RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -y python=${PYTHON_VERSION}
 ARG TARGETPLATFORM
 # On arm64 we can only install wheel packages
 RUN /opt/conda/bin/conda install -c "${INSTALL_CHANNEL}" -c "${CUDA_CHANNEL}" -y "python=${PYTHON_VERSION}" \
